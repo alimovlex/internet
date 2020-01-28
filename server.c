@@ -23,20 +23,24 @@ char *my_itoa(int num, char *str) //перевод числа в строку
 void func(int sockfd) 
 { 
 	char buff[MAX]; 
-	int n[1],i;  
 	for (;;) //бесконечный цикл для чата
 	{ 
 		bzero(buff, MAX); 
 		read(sockfd, buff, sizeof(buff)); 
 		printf("From client: %s\n", buff);
-		write(sockfd, buff, sizeof(buff));  
-		my_itoa(system(buff),buff);
-		write(sockfd, buff, sizeof(buff));          
 		if (strncmp("exit", buff, 4) == 0) //выход из чата
 		{ 
 			printf("Server Exit...\n"); 
+			write(sockfd, buff, sizeof(buff));
 			break; 
 		} 
+		//FILE *cmd=popen(buff,"r");
+		//while (fgets(buff, sizeof(buff), cmd))
+		//strcpy(buff,cmd);
+		//pclose(cmd);
+		//write(sockfd, buff, sizeof(buff)); 
+		my_itoa(system(buff),buff);
+		write(sockfd, buff, sizeof(buff));          
 	} 
 } 
 
