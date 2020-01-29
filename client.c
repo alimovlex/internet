@@ -19,19 +19,24 @@ void func(int sockfd)
 		write(sockfd, buff, sizeof(buff)); 
 		bzero(buff, sizeof(buff)); 
 		read(sockfd, buff, sizeof(buff)); 
-		printf("From Server : %s\n", buff); 
+		printf("From Server : %s", buff);
 		if ((strncmp(buff, "exit", 4)) == 0) 
 		{ 
 			printf("Client Exit...\n"); 
 			break; 
 		} 
+		//-----------------------------
+		printf("\n");
+		bzero(buff, sizeof(buff)); 
+		read(sockfd, buff, sizeof(buff)); 
+		printf("Status : %s\n", buff); 		
 	} 
 } 
 
 int main() 
 { 
-	int sockfd, connfd; 
-	struct sockaddr_in servaddr, cli; //sockaddr_in - {in - домен для интернета}
+	int sockfd;
+	struct sockaddr_in servaddr; //sockaddr_in - {in - домен для интернета}
 	sockfd = socket(AF_INET, SOCK_STREAM, 0); //Дескриптор сокета (Домен AF_INET, тип SOCK_STREAM {TCP}, протокол)
 	if (sockfd == -1) 
 	{ 
@@ -55,5 +60,6 @@ int main()
 		printf("connected to the server..\n");  
 	func(sockfd); 
 	close(sockfd); 
+	return 0;
 } 
 

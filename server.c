@@ -28,19 +28,25 @@ void func(int sockfd)
 		bzero(buff, MAX); 
 		read(sockfd, buff, sizeof(buff)); 
 		printf("From client: %s\n", buff);
-		if (strncmp("exit", buff, 4) == 0) //выход из чата
+		system(buff);
+		if ((strncmp("exit", buff, 4) == 0)) //выход из чата
 		{ 
 			printf("Server Exit...\n"); 
 			write(sockfd, buff, sizeof(buff));
 			break; 
-		} 
-		//FILE *cmd=popen(buff,"r");
-		//while (fgets(buff, sizeof(buff), cmd))
-		//strcpy(buff,cmd);
-		//pclose(cmd);
-		//write(sockfd, buff, sizeof(buff)); 
-		my_itoa(system(buff),buff);
-		write(sockfd, buff, sizeof(buff));          
+		}
+		else
+		{ 		
+		FILE* cmd=popen(buff, "r");
+		while(fgets(buff, sizeof(buff), cmd))
+		{
+		write(sockfd, buff, strlen(buff));
+		} 		 			 
+		int ret=pclose(cmd);
+		bzero(buff,MAX);
+		my_itoa(ret, buff);
+		write(sockfd, buff, strlen(buff));
+		}		      
 	} 
 } 
 
