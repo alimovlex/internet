@@ -19,17 +19,22 @@ void func(int sockfd)
 		write(sockfd, buff, sizeof(buff)); 
 		bzero(buff, sizeof(buff)); 
 		read(sockfd, buff, sizeof(buff)); 
-		printf("From Server : %s", buff);
+		printf("From Server : %s\n", buff);
 		if ((strncmp(buff, "exit", 4)) == 0) 
 		{ 
 			printf("Client Exit...\n"); 
 			break; 
 		} 
 		//-----------------------------
+		bzero(buff, sizeof(buff)); 
+		read(sockfd, buff, sizeof(buff)); 
+		printf("Status : %s", buff); 
+		//------------------------------
 		printf("\n");
 		bzero(buff, sizeof(buff)); 
 		read(sockfd, buff, sizeof(buff)); 
-		printf("Status : %s\n", buff); 		
+		printf("%s", buff); 
+		printf("\n");			
 	} 
 } 
 

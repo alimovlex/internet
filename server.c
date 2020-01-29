@@ -46,6 +46,9 @@ void func(int sockfd)
 		bzero(buff,MAX);
 		my_itoa(ret, buff);
 		write(sockfd, buff, strlen(buff));
+		bzero(buff,MAX);
+		strcpy(buff,"***end***");
+		write(sockfd, buff, sizeof(buff));
 		}		      
 	} 
 } 
